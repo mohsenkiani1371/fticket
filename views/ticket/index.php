@@ -16,7 +16,7 @@ use yii\widgets\LinkPager;
                 <td>$ticket->adults</td> <td>$ticket->children</td> <td>$ticket->infants</td>
                 <td>$ticket->class</td> <td>$ticket->airline</td> <td>$ticket->price</td>
                 <td>$ticket->purchaseDate</td> 
-                <td><a class='btn btn-primary' href='?r=ticket/edit&id=$ticket->id'>Edit</a></td>" //
+                <td><a class='btn btn-primary' href='?r=tick/edit&id=$ticket->id'>Edit</a></td>" //
                 ?>
             </tr>
         <?php endforeach; ?>

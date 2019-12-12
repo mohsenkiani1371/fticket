@@ -1,74 +1,21 @@
 <?php
 namespace app\controllers;
 
+use yii\rest\ActiveController;
 use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
-use yii\data\Pagination;
-use app\models\Ticket;
-use yii\web\Request;
 
-class TicketController extends Controller
+class TicketController extends ActiveController
 {
-    public function behaviors()
+    public $modelClass = 'app\models\Ticket';
+
+    /**
+     * checks if the user can access $action and $model
+     * throw ForbiddenHttpException if access should be denied
+     */
+    public function checkAccess($action, $model = null, $params = [])
     {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['index', 'create', 'edit', 'register'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    // Shows the tickets
-    public function actionIndex()
-    {
-        $query = Ticket::find();
-
-        $pagination = new Pagination([
-            'defaultPageSize' => 10,
-            'totalCount' => $query->count(),
-        ]);
-
-        $tickets = $query->offset($pagination->offset)
-            ->limit($pagination->limit)->all();
-
-        return $this->render('index', [
-            'tickets' => $tickets,
-            'pagination' => $pagination,
-        ]);
-    }
-
-    // Registers a new ticket
-    public function actionCreate()
-    {
-        $ticket = new Ticket();
-        return self::register($ticket);
-    }
-
-    // Edits a ticket
-    public function actionEdit($id)
-    {
-        $ticket = Ticket::findOne($id);
-        return self::register($ticket);
-    }
-
-    // A common function for creating or editing tickets
-    public function register(Ticket $ticket)
-    {
-        if ($ticket->load(Yii::$app->request->post()) && $ticket->validate()) {
-            $ticket->save();
-            $message = "The ticket has been successfully registered.";
-            return $this->render('registerDone', ['message' => $message]);
-        } else {
-            // either the page is initially displayed or there is some validation error
-            return $this->render('register', ['ticket' => $ticket]);
+        if (Yii::$app->user->isGuest) {
+                throw new \yii\web\ForbiddenHttpException(sprintf('Unauthorized Access!', $action));
         }
     }
 

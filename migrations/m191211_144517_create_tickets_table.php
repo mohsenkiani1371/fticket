@@ -28,6 +28,7 @@ class m191211_144517_create_tickets_table extends Migration
             'price' => $this->Integer()->unsigned(),
             'purchaseDate' => $this->timestamp()
         ]);
+
     }
 
     /**

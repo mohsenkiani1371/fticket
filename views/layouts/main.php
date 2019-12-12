@@ -44,8 +44,8 @@ AppAsset::register($this);
             );
     } else {
         array_push($navItems,
-            ['label' => 'Tickets', 'url' => ['/ticket/index']],
-            ['label' => 'Ticket Registration', 'url' => ['/ticket/create']],
+            ['label' => 'Tickets', 'url' => ['/tick/index']],
+            ['label' => 'Ticket Registration', 'url' => ['/tick/create']],
             ['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
             'url' => ['/user/security/logout'],
             'linkOptions' => ['data-method' => 'post']]
